@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+	<title>Аудио плеер</title>
+	<style type="text/css">
+		#box{
+			width: 600px;
+			margin: 0 auto;
+			padding: 10px 0;
+			position: relative;
+		}
+		#controls {
+			display: table;
+			table-layout: fixed;
+			width: 100%;
+		}
+		#controls > * {
+			display: table-cell;
+			vertical-align: middle;
+			position: relative;
+		}
+		#controls > div:first-child{
+			width: 123px;
+		}
+		button {
+			line-height: 23px;
+			text-transform: capitalize;
+		}
+		#cn {
+			border: 2px solid black;
+			height: 10px;
+			position: relative;
+		}
+		#controls div div{height: 10px;}
+		#controls div.prok {
+			background: none repeat scroll 0 0 orange;
+			left: 0;
+			position: absolute;
+			top: 10px;
+			z-index: -1;
+		}
+		.volume {
+			padding: 0 5px;
+			width: 70px;
+		}
+		.volume div:first-child{
+			margin-top: 9px;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+			user-select: none;
+		}
+		.volume div:last-child{
+			background: none repeat scroll 0 0 green;
+			left: 0;
+			position: relative;
+			top: -10px;
+			width: 100%;
+			z-index: -1;
+		}
+	</style>
+	<script type="text/javascript">
+		var audio, button, prok, timeOut, volume, l_click;
+		function onCl(){
+		audio=document.getElementById("box").firstElementChild;
+		button=document.getElementsByTagName("button");
+		
+		prok=document.getElementById("controls").children[1].lastElementChild;
+		prok.previousElementSibling.addEventListener('click', prokShow);
+
+		volume=document.getElementById("controls").children[2].lastElementChild;
+		volume.previousElementSibling.addEventListener('mousedown', lDown);
+		volume.previousElementSibling.addEventListener('mousemove', volumeScrl);
+		volume.previousElementSibling.addEventListener('mouseup', lUp);
+
+		document.body.addEventListener('mouseup', lUp);
+
+		button[0].addEventListener('click', Plays)
+		button[1].addEventListener('click', Pause)
+		}
+		function prokShow (ev) {
+			var x=ev.layerX * 100/ ev.target.offsetWidth;
+			audio.currentTime= audio.duration*x/100
+			console.log(x)
+		}
+		function polos () {
+			var wp=audio.currentTime*100/audio.duration;
+			prok.style.width=wp+'%';
+			if (wp<99.9) timeOut=window.setTimeout(polos, 500);
+			else prok.removeAttribute('style');
+		}
+		function Plays () {
+			audio.play();
+			polos()
+		}
+		function Pause (ev) {
+			audio.pause();
+			clearTimeout(timeOut);
+		}
+		function lDown () {l_click=1}
+		function lUp () {l_click=0}
+		function volumeScrl (ev) {
+			if (l_click) {
+			var v=ev.layerX*100/ ev.target.offsetWidth, vw;
+			vw=(v*ev.target.offsetWidth/100) -5;
+			volume.style.width=vw +'px';
+			v= v-5<4? 0: v;
+			v= v-5>95? 100:v;
+			audio.volume=1*v/100;
+			};
+		}
+		window.onload= onCl
+	</script>
+	</head>
+	<body>
+	<div id="box">
+		<audio src="http://cs422517v4.vk.me/u152317998/audios/fbdd82d7470e.mp3" controls=""></audio>
+		<div id="controls">
+			<div>
+				<button>play</button>
+				<button>pause</button>
+			</div>
+			<div>
+				<div id="cn"></div>
+				<div class="prok"></div>
+			</div>
+			<div class="volume">
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+
+	</div>
+	</body>
+</html>
