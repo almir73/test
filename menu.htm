@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Меню</title>
+	<style type="text/css">
+		html * {
+		    margin: 0;
+		    padding: 0;
+		}
+		.contaner{
+			width: 600px;
+			margin:auto;
+		}
+		.contaner div{
+			height: 100px;
+			background: green;
+		}
+		.contaner ul{
+		    background: orange;
+			list-style: none;
+			padding: 0;
+		}
+		.contaner > ul{
+			display: table;
+			height: 40px;
+			width: 100%;
+		}
+		.contaner > ul > li{
+			display: table-cell;
+		}
+		.contaner li{
+			position: relative;
+		}
+		li a {
+		    display: block;
+		    line-height: 40px;
+		    text-align: center;
+		}
+		.contaner ul li:hover, li:hover> a {
+		    background: none repeat scroll 0 0 red;
+		}
+		li> ul {
+			border: 2px solid;
+			position: absolute;
+			display: none;
+			left:0;
+		}
+		li:hover > ul{
+			display: block;
+		}
+		li ul li {
+			padding: 0 4px;
+			display: block;
+			white-space: nowrap;
+		}li > ul > li ul {
+		    left: 100%;
+		    top: 0;
+		}
+	</style>
+	<script type="text/javascript">
+		var li, ul;
+		function offsetPosition(element) { //нахождение левого края элемента
+		    var offsetLeft = 0, offsetTop = 0;
+		    do {
+		        offsetLeft += element.offsetLeft;
+		        offsetTop  += element.offsetTop;
+		    } while (element = element.offsetParent);
+		    return offsetLeft;//[offsetLeft , offsetTop];
+		}
+		//учебник по координатам http://learn.javascript.ru/coordinates#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%BE%D1%80%D0%B4%D0%B8%D0%BD%D0%B0%D1%82-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%B0
+		function ulPosiition(ev){ //позиция расскрывающегося списка
+			var obj= ev.target;
+			var contaner=document.getElementById('contaner').offsetLeft;
+			var posLi=Math.floor(offsetPosition(obj)) - contaner, liUl=obj.parentNode.lastElementChild;
+			if (obj.tagName=='A') {// если это ссылка
+				liUl.removeAttribute('style')
+				if (liUl.offsetWidth+posLi>ul.offsetWidth && obj.nextElementSibling.tagName=='UL'){
+					console.log(this)
+					var left=ul.offsetWidth-(liUl.offsetWidth+posLi)
+					liUl.style['left']=left+'px'
+				}
+			};
+		}
+		/* или это. не забудь отнять левый отступ от окна и скроллинг
+		function getCoords(elem) { 
+		    var box = elem.getBoundingClientRect(); 
+		    var body = document.body;
+		    var docEl = document.documentElement; 
+		    var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop; 
+		    var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+		    var clientTop = docEl.clientTop || body.clientTop || 0;
+		    var clientLeft = docEl.clientLeft || body.clientLeft || 0; 
+		    var top  = box.top +  scrollTop - clientTop; 
+		    var left = box.left + scrollLeft - clientLeft; 
+		  return { top: Math.round(top), left: Math.round(left), right:box.right }; 
+		} 
+		*/
+		window.onload=function () {
+			ul=document.getElementById('ul')
+			a= ul.getElementsByTagName('a');
+			for (var i = 0; i < a.length; i++) {
+				a[i].addEventListener('mouseover', ulPosiition);
+			};
+		}
+	</script>
+</head>
+<body>
+	<div class="contaner" id="contaner">
+		<div>
+			Lorem ipsum dolor.
+		</div>
+		<ul id='ul'>
+			<li><a href="">lorem1</a>
+				<ul>
+					<li>Lorem ipsum dolor.</li>
+					<li>Lorem ipsum dolor.</li>
+					<li>Lorem ipsum dolor.</li>
+				</ul>
+			</li>
+			<li><a href="">lorem1</a>
+				<ul>
+					<li>Lorem ipsum dolor.</li>
+					<li>Lorem ipsum dolor.</li>
+					<li>Lorem ipsum dolor.</li>
+				</ul>
+			</li>
+			<li><a href="">lorem1</a>
+				<ul>
+					<li>Lorem ipsum dolor.</li>
+					<li>
+						<a href="http://learn.javascript.ru/coordinates#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%BE%D1%80%D0%B4%D0%B8%D0%BD%D0%B0%D1%82-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%B0">Координаты.</a>
+					</li>
+					<li>Lorem ipsum dolor.</li>
+				</ul>
+			</li>
+			<li><a href="">lorem1</a>
+				<ul>
+					<li>Lorem ipsum dolor.</li>
+					<li>Lorem ipsum dolor.</li>
+					<li>Lorem ipsum dolor. Lorem ipsum dolor sit amet</li>
+				</ul>
+			</li>
+			<li><a href="">lorem last</a>
+				<ul>
+					<li>Lorem ipsum dolor.</li>
+					<li>Lorem ipsum dolor sit amet,</li>
+					<li>Lorem ipsum dolor.</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
