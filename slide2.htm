@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>слайдер 2</title>
+	<style type="text/css">
+		#d1 {
+		    border: 2px solid red;
+		    margin: 41px 10% 0;
+		    padding: 0;
+		    perspective: 1000px;
+		    overflow:hidden;
+		}
+		.win {
+		    border: medium none;
+		    display: inline-block;
+		    float: left;
+		    left:0;
+		    margin: 0;
+		    overflow: hidden;
+		    position: relative;
+		    transform-origin: left center 0;
+		    transform: rotateY(0deg);
+		    transition: all 2s ease 0s;
+		}
+		img{
+		    position:relative;
+		}
+	</style>
+	<script type="text/javascript">
+	var img, div={}, imgUrl=['http://imworld.aufeminin.com/story/20131120/miranda-kerr-130615_w1000.jpg','http://imworld.aufeminin.com/story/20130803/alessandra-ambrosio-miranda-kerr-et-candice-swanepoel-56630_w1000.jpg','http://1.bp.blogspot.com/-_zbDbZkA9JY/U4lwC2TdyuI/AAAAAAAAAII/KgglTs1Heh0/s1600/Miranda+Kerr+Bikini+Body.jpg'], imgShow=0;
+
+	function imgNext (argument) {
+		imgShow++;
+		if (imgShow<imgUrl.length) {
+			for (var i = 0; i < img.length; i++) {
+				img[i].src=imgUrl[imgShow]
+			};
+		}else{
+			imgShow=0
+			for (var i = 0; i < img.length; i++) {
+				img[i].src=imgUrl[imgShow]
+			};
+		}
+		resiZe()
+		show()
+	}
+	function show (argument) {
+		if (div.countWin[0].style.left==0) {
+			for (var i = 0; i < div.countWin.length; i++) {
+				div.countWin[i].style.left= -(Math.floor(div.w/div.countWin.length)*i)+'px'
+				div.countWin[i].style.transform='rotateY(116deg)'
+			};
+			window.setTimeout(imgNext,2000)
+		}else{
+			for (var i = 0; i < div.countWin.length; i++) {
+				div.countWin[i].style.left= ''
+				div.countWin[i].style.transform=''
+			};
+		}
+	}
+	function resiZe() {
+		div.Obj=document.getElementById('d1');
+		div.countWin=div.Obj.getElementsByTagName('div');
+		img=document.getElementsByTagName('img');
+		imgCount=img.length;
+		div.w=div.Obj.scrollWidth;
+
+		for (var i = 0; i < img.length; i++) {
+			img[i].style.width=div.w+'px';
+			img[i].style.left= -(div.w/imgCount*i)+'px';
+			div.countWin[i].style.width=Math.floor(div.w/imgCount)+'px';
+		};
+		div.h=img[0].scrollHeight;
+		div.Obj.style.height=div.h+'px';
+	} 
+	window.onload= function () {
+		resiZe();
+		document.getElementById('but').addEventListener('click', show)
+	} 
+	window.onresize=resiZe
+	</script>
+</head>
+<body>
+	<button id="but">show</button>
+	<div id="d1">
+		<div class="win">
+			<img src="http://imworld.aufeminin.com/story/20131120/miranda-kerr-130615_w1000.jpg" alt="">
+		</div>
+		<div class="win">
+			<img src="http://imworld.aufeminin.com/story/20131120/miranda-kerr-130615_w1000.jpg" alt="">
+		</div>
+		<div class="win">
+			<img src="http://imworld.aufeminin.com/story/20131120/miranda-kerr-130615_w1000.jpg" alt="">
+		</div>
+		<div class="win">
+			<img src="http://imworld.aufeminin.com/story/20131120/miranda-kerr-130615_w1000.jpg" alt="">
+		</div>
+		<div class="win">
+			<img src="http://imworld.aufeminin.com/story/20131120/miranda-kerr-130615_w1000.jpg" alt="">
+		</div>
+		<div class="win">
+			<img src="http://imworld.aufeminin.com/story/20131120/miranda-kerr-130615_w1000.jpg" alt="">
+		</div>
+	</div>
+</body>
+</html>
