@@ -26,6 +26,7 @@
 		img{
 		    position:relative;
 		}
+		button{position: fixed;}
 	</style>
 	<script type="text/javascript">
 	var img, div={}, imgUrl=['http://imworld.aufeminin.com/story/20131120/miranda-kerr-130615_w1000.jpg','http://imworld.aufeminin.com/story/20130803/alessandra-ambrosio-miranda-kerr-et-candice-swanepoel-56630_w1000.jpg','http://1.bp.blogspot.com/-_zbDbZkA9JY/U4lwC2TdyuI/AAAAAAAAAII/KgglTs1Heh0/s1600/Miranda+Kerr+Bikini+Body.jpg'], imgShow=0;
@@ -76,7 +77,8 @@
 	} 
 	window.onload= function () {
 		resiZe();
-		document.getElementById('but').addEventListener('click', show)
+		document.getElementById('but').addEventListener('click', show);
+		resiZe();
 	} 
 	window.onresize=resiZe
 	</script>
